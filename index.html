@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suhas Kodakandla | Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <a href="#home" class="logo">Suhas Kodakandla</a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Toggle navigation"
+        aria-controls="siteNav"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav id="siteNav" class="site-nav">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#practices">Internships</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <a
+          class="nav-cta"
+          href="https://drive.google.com/file/d/1rTGh-HmbgYO2f0iAs1MNecc9m6RWnnXb/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Resume
+        </a>
+      </nav>
+    </header>
+
+    <!-- Home -->
+    <section id="home" class="section home">
+      <div class="home-text">
+        <div class="home-panel">
+          <p class="home-intro">Open to opportunities</p>
+          <h1>Suhas Kodakandla</h1>
+          <h3 class="typing-text">I build as a <span></span></h3>
+          <p class="home-lead">
+            I design and build practical web applications with clean UI and
+            solid backend foundations. My focus is full-stack development with
+            Python, Django, JavaScript, and SQL, turning ideas into reliable
+            user-facing products.
+          </p>
+
+          <div class="home-highlights" aria-label="Key profile highlights">
+            <span class="home-highlight">Full-Stack Projects</span>
+            <span class="home-highlight">Problem Solver</span>
+            <span class="home-highlight">Fast Learner</span>
+          </div>
+
+          <div class="social-icons">
+            <a
+              href="https://www.linkedin.com/in/suhas-kodakandla/"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a
+              href="https://github.com/Suhas26-05"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-github"></i>
+            </a>
+          </div>
+
+          <div class="home-actions">
+            <a
+              href="https://drive.google.com/file/d/1rTGh-HmbgYO2f0iAs1MNecc9m6RWnnXb/view?usp=sharing"
+              class="btns"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Resume</a
+            >
+            <a href="#projects" class="btns btn-secondary">View Projects</a>
+          </div>
+        </div>
+      </div>
+      <div class="home-img">
+        <div class="home-img-wrap">
+          <img src="images/profile.jpg" alt="Suhas Kodakandla" />
+          <span class="home-image-badge">Open to Work</span>
+        </div>
+      </div>
+    </section>
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="about-layout">
+        <div class="about-main">
+          <div class="section-head">
+            <h2>About Me</h2>
+            <p>
+              Computer Science student focused on building practical, reliable,
+              and user-friendly software solutions.
+            </p>
+          </div>
+          <div class="about-copy">
+            <p>
+              I am a Computer Science student at Vaagdevi College of
+              Engineering, focused on building practical software that solves
+              real problems. My foundation includes programming, web
+              development, and database design.
+            </p>
+            <p>
+              I have built projects such as a College Management System and a
+              Bus Reservation System using Python, Django, MySQL, HTML, CSS, and
+              JavaScript. Through these projects, I gained hands-on experience
+              in full-stack workflows, clean implementation, and user-focused
+              feature design.
+            </p>
+            <p>
+              I actively continue learning technologies that improve backend and
+              system-level thinking. I value clear communication, fast learning,
+              and reliable execution, and I am looking for opportunities to
+              contribute to impactful engineering work.
+            </p>
+          </div>
+        </div>
+
+        <aside class="about-side">
+          <div class="about-stats">
+            <div class="stat-card stat-projects">
+              <p class="stat-label">Projects Completed</p>
+              <p class="stat-value" id="projectsCompletedValue">--</p>
+              <p class="stat-meta">Auto-updated from portfolio projects</p>
+            </div>
+
+            <a
+              class="stat-card stat-leetcode"
+              href="https://leetcode.com/u/Suhaskodakandla2605/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open LeetCode profile in a new tab"
+            >
+              <p class="stat-label">LeetCode Problems Solved</p>
+              <p class="stat-value">15+</p>
+              <p class="stat-meta">Click to view profile</p>
+            </a>
+          </div>
+
+          <div class="about-skills-panel">
+            <h3 class="skills-title">Technical Skills</h3>
+            <div class="skills-grid" id="aboutSkillsGrid"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section projects-section">
+      <div class="section-head projects-head">
+        <h2>Projects</h2>
+        <p>
+          A selection of practical applications focused on problem solving, user
+          experience, and full-stack implementation.
+        </p>
+      </div>
+
+      <div class="project-grid" id="projectsGrid"></div>
+    </section>
+
+    <!-- Project Popup -->
+    <div id="projectModal" class="modal">
+      <div class="modal-box">
+        <span class="close-btn">&times;</span>
+
+        <div class="modal-left">
+          <img id="modalImg" />
+        </div>
+
+        <div class="modal-right">
+          <h2 id="modalTitle"></h2>
+
+          <p id="modalDesc" class="modal-full-desc"></p>
+
+          <div class="modal-buttons">
+            <a id="modalGithub" target="_blank" rel="noopener noreferrer"
+              >GitHub</a
+            >
+            <a id="modalLive" target="_blank" rel="noopener noreferrer">Live</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="practices" class="section internships">
+      <div class="section-head internships-head">
+        <h2>Internships</h2>
+        <p>
+          Practical experience gained through hands-on development and
+          engineering internships.
+        </p>
+      </div>
+
+      <div class="internships-grid" id="internshipsGrid"></div>
+    </section>
+    <!-- Contact -->
+    <section id="contact">
+      <div class="contact-container">
+        <div class="contact-info-panel">
+          <h2>Let us build something great together.</h2>
+          <p>
+            If you have a project idea, internship opportunity, or collaboration
+            in mind, feel free to reach out.
+          </p>
+
+          <div class="contact-meta-list">
+            <a
+              class="contact-meta-item"
+              href="mailto:kodakandlasuhas66@gmail.com"
+            >
+              <span class="meta-label">Email</span>
+              <span class="meta-value">kodakandlasuhas66@gmail.com</span>
+            </a>
+            <a
+              class="contact-meta-item"
+              href="https://www.linkedin.com/in/suhas-kodakandla/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="meta-label">LinkedIn</span>
+              <span class="meta-value">/in/suhas-kodakandla</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-form-panel">
+          <h3>Send a message</h3>
+          <form
+            id="contactForm"
+            class="contact-form"
+            onsubmit="sendMail(event)"
+          >
+            <input
+              type="hidden"
+              name="access_key"
+              value="a0131d6c-34ca-4bd4-8bf3-c8b7a7f52b9a"
+            />
+            <input type="text" name="name" placeholder="Full name*" required />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email address*"
+              required
+            />
+            <input type="text" name="subject" placeholder="Subject" />
+            <textarea name="message" placeholder="Content*" required></textarea>
+            <button type="submit">Send message</button>
+          </form>
+
+          <div id="toast" class="toast"></div>
+        </div>
+      </div>
+    </section>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer>
+      <p>&copy; <span id="footerYear"></span> Suhas Kodakandla | Portfolio</p>
+    </footer>
+  </body>
+</html>
