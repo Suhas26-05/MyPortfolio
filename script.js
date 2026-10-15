@@ -1,110 +1,126 @@
-async function sendMail(event) {
-  event.preventDefault();
-
-  const formData = new FormData(event.target);
-
-  try {
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData,
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      showToast("Mail Sent Successfully!");
-      event.target.reset();
-    } else {
-      showToast("Error sending mail. Try again.");
-    }
-  } catch (error) {
-    showToast("Something went wrong!");
-    console.error(error);
-  }
-}
-
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.className = "show";
-  setTimeout(() => (toast.className = toast.className.replace("show", "")), 3000);
-}
-
-const modal = document.getElementById("projectModal");
-const closeBtn = document.querySelector(".close-btn");
-const aboutSkillsGrid = document.getElementById("aboutSkillsGrid");
-const projectsGrid = document.getElementById("projectsGrid");
-const internshipsGrid = document.getElementById("internshipsGrid");
-const projectsCompletedValue = document.getElementById("projectsCompletedValue");
-
-const modalImg = document.getElementById("modalImg");
-const modalTitle = document.getElementById("modalTitle");
-const modalDesc = document.getElementById("modalDesc");
-const modalGithub = document.getElementById("modalGithub");
-const modalLive = document.getElementById("modalLive");
-
-const portfolioData = window.PORTFOLIO_DATA || { projects: [], internships: [] };
+const portfolioData = window.PORTFOLIO_DATA;
 
 const escapeHtml = (value) =>
   String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
+    .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-function renderAboutSkills() {
-  if (!aboutSkillsGrid) return;
+function renderExperience() {
+  const list = document.getElementById("experienceList");
+  if (!list || !portfolioData) return;
 
-  aboutSkillsGrid.innerHTML = (portfolioData.aboutSkills || [])
-    .map((skill) => {
-      if (skill.type === "icon") {
-        const safeClass = escapeHtml(skill.className || "");
-        const safeStyle = skill.style ? ` style="${escapeHtml(skill.style)}"` : "";
-        return `<i class="${safeClass}"${safeStyle}></i>`;
-      }
-
-      if (skill.type === "image") {
-        return `<img src="${escapeHtml(skill.src || "")}" alt="${escapeHtml(skill.alt || "Skill")}" />`;
-      }
-
-      return "";
-    })
+  list.innerHTML = (portfolioData.experience || [])
+    .map(
+      (item) => `
+        <li class="experience-item">
+          <div class="experience-period"><span class="timeline-pin" aria-hidden="true"></span>${escapeHtml(item.period)}</div>
+          <div>
+            <h3 class="experience-role">${escapeHtml(item.role)}</h3>
+            <p class="experience-company">${escapeHtml(item.company)}</p>
+            ${
+              item.details && item.details.length
+                ? `<ul class="experience-details">${item.details
+                    .map((detail) => `<li>${escapeHtml(detail)}</li>`)
+                    .join("")}</ul>`
+                : ""
+            }
+          </div>
+          <div class="experience-tags" aria-label="Skills used">
+            ${(item.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+          </div>
+        </li>
+      `,
+    )
     .join("");
 }
-function renderProjects() {
-  if (!projectsGrid) return;
 
-  projectsGrid.innerHTML = portfolioData.projects
-    .map(
-      (project) => `
-        <article
-          class="project-card"
-          data-title="${escapeHtml(project.title)}"
-          data-tech="${escapeHtml(project.tech)}"
-          data-desc="${escapeHtml(project.desc)}"
-          data-full-desc="${escapeHtml(project.fullDesc || project.desc || "")}" 
-          data-github="${escapeHtml(project.github)}"
-          data-live="${escapeHtml(project.live || "#")}" 
-          data-img="${escapeHtml(project.img)}"
-          tabindex="0"
-          role="button"
-          aria-label="Open project details for ${escapeHtml(project.title)}"
-        >
-          <div class="project-media">
-            <img src="${escapeHtml(project.img)}" alt="${escapeHtml(project.title)} preview" loading="lazy" />
+function renderProjectPreview(type) {
+  const previews = {
+    campus: `
+      <div class="preview-window campus-window">
+        <div class="preview-toolbar"><span>campconnect</span><span>ACADEMIC PORTAL</span></div>
+        <div class="campus-layout">
+          <div class="campus-sidebar"><i></i><i></i><i></i><i></i></div>
+          <div class="campus-main">
+            <span class="preview-eyebrow">MONDAY · OVERVIEW</span>
+            <strong>Good morning, Ananya</strong>
+            <div class="campus-metrics"><i></i><i></i><i></i></div>
+            <div class="campus-table"><i></i><i></i><i></i><i></i></div>
           </div>
-          <div class="project-content">
-            <p class="project-tech">${escapeHtml(project.tech)}</p>
+        </div>
+      </div>`,
+    weather: `
+      <div class="preview-window weather-window">
+        <div class="weather-location">HYDERABAD, IN <span>LIVE</span></div>
+        <div class="weather-now"><div><span>MONDAY · 2:30 PM</span><strong>29°</strong><small>Partly cloudy</small></div><i class="weather-sun"></i></div>
+        <div class="weather-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="weather-days"><i></i><i></i><i></i><i></i></div>
+      </div>`,
+    banking: `
+      <div class="preview-window banking-window">
+        <div class="bank-card"><span>EVERGREEN BANK</span><i>•••• 2048</i><strong>₹ 84,250.00</strong><small>AVAILABLE BALANCE</small><b>VISA</b></div>
+        <div class="bank-transactions"><span>RECENT ACTIVITY</span><i><b>◉</b> Market Street <strong>− ₹ 1,250</strong></i><i><b>↙</b> Salary credit <strong class="credit">+ ₹ 42,000</strong></i></div>
+      </div>`,
+    algorithms: `
+      <div class="preview-window algorithm-window">
+        <div class="algorithm-toolbar"><span>SORTING LAB</span><span>MERGE SORT · STEP 08</span></div>
+        <div class="algorithm-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="algorithm-controls"><span>◀</span><i><b></b></i><span>▶</span><small>08 / 24</small></div>
+      </div>`,
+    tasks: `
+      <div class="preview-window tasks-window">
+        <div class="tasks-heading"><span>MY DAY · 04</span><strong>Make room<br />for good work.</strong></div>
+        <div class="task-line"><i class="task-checked">✓</i><span>Review project notes</span><small>DONE</small></div>
+        <div class="task-line"><i></i><span>Sketch new ideas</span><small>11:30</small></div>
+        <div class="task-line"><i></i><span>Ship the small thing</span><small>14:00</small></div>
+      </div>`,
+    calculator: `
+      <div class="preview-window calculator-window">
+        <div class="calculator-display"><span>128 × 4</span><strong>512</strong></div>
+        <div class="calculator-keys"><i>AC</i><i>±</i><i>%</i><i class="key-op">÷</i><i>7</i><i>8</i><i>9</i><i class="key-op">×</i><i>4</i><i>5</i><i>6</i><i class="key-op">−</i><i>1</i><i>2</i><i>3</i><i class="key-op">+</i></div>
+      </div>`,
+  };
+
+  return previews[type] || "";
+}
+
+function renderProjects() {
+  const list = document.getElementById("projectsList");
+  if (!list || !portfolioData) return;
+
+  list.innerHTML = (portfolioData.projects || [])
+    .map(
+      (project, index) => `
+        <article class="project-entry project-${escapeHtml(project.preview || "default")}">
+          <div class="project-preview" aria-hidden="true">${renderProjectPreview(project.preview)}</div>
+          <div class="project-title">
+            <span class="project-number">${String(index + 1).padStart(2, "0")} / PROJECT</span>
             <h3>${escapeHtml(project.title)}</h3>
-            <p class="project-full-desc">${escapeHtml(project.desc || "")}</p>
-            <div class="project-card-links">
-              ${project.github && project.github !== "#"
-                ? `<a class="project-link-btn" href="${escapeHtml(project.github)}" target="_blank" rel="noopener noreferrer">GitHub</a>`
-                : `<span class="project-link-btn disabled" aria-disabled="true">GitHub Unavailable</span>`}
-              ${project.live && project.live !== "#"
-                ? `<a class="project-link-btn" href="${escapeHtml(project.live)}" target="_blank" rel="noopener noreferrer">Live Demo</a>`
-                : `<span class="project-link-btn disabled" aria-disabled="true">Live Unavailable</span>`}
+            <p class="project-stack">${escapeHtml(project.stack)}</p>
+          </div>
+          <div class="project-detail">
+            <p class="project-description">${escapeHtml(project.description)}</p>
+            ${
+              project.points && project.points.length
+                ? `<ul class="project-points">${project.points
+                    .map((point) => `<li>${escapeHtml(point)}</li>`)
+                    .join("")}</ul>`
+                : ""
+            }
+            <div class="project-links">
+              ${
+                project.github
+                  ? `<a href="${escapeHtml(project.github)}" target="_blank" rel="noopener noreferrer">Source code <span aria-hidden="true">↗</span></a>`
+                  : ""
+              }
+              ${
+                project.live
+                  ? `<a href="${escapeHtml(project.live)}" target="_blank" rel="noopener noreferrer">Live project <span aria-hidden="true">↗</span></a>`
+                  : ""
+              }
             </div>
           </div>
         </article>
@@ -114,164 +130,221 @@ function renderProjects() {
 }
 
 function renderInternships() {
-  if (!internshipsGrid) return;
+  const list = document.getElementById("internshipList");
+  if (!list || !portfolioData) return;
 
-  internshipsGrid.innerHTML = portfolioData.internships
+  list.innerHTML = (portfolioData.internships || [])
     .map(
-      (item, index) => `
-        <article class="internship-card ${item.featured ? "featured" : ""}">
-          <div class="internship-top">
-            <span class="internship-index">${String(index + 1).padStart(2, "0")}</span>
-            <p class="internship-date">${escapeHtml(item.period)}</p>
-          </div>
-          <h3>${escapeHtml(item.title)}</h3>
-          ${item.company ? `<p class="internship-company">${escapeHtml(item.company)}</p>` : ""}
-          <p class="internship-summary">${escapeHtml(item.summary)}</p>
-          <div class="internship-tags">
-            ${(item.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
-          </div>
-        </article>
+      (internship, index) => `
+        <li class="internship-item${internship.featured ? " internship-featured" : ""}">
+          <details class="internship-entry"${internship.featured ? " open" : ""}>
+            <summary>
+              <span class="internship-number">${String(index + 1).padStart(2, "0")}</span>
+              <span class="internship-period">${escapeHtml(internship.period)}</span>
+              <span class="internship-heading">
+                <strong>${escapeHtml(internship.role)}</strong>
+                <span>${escapeHtml(internship.company)}</span>
+              </span>
+              <span class="internship-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="internship-detail">
+              <p class="internship-summary">${escapeHtml(internship.summary)}</p>
+              <div class="internship-tags" aria-label="Skills used">
+                ${(internship.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+              </div>
+            </div>
+          </details>
+        </li>
       `,
     )
     .join("");
 }
 
-renderAboutSkills();
-renderProjects();
-renderInternships();
+function renderSkillsAndCredentials() {
+  if (!portfolioData) return;
 
-const cards = document.querySelectorAll(".project-card");
+  const skillGroups = document.getElementById("skillGroups");
+  if (skillGroups) {
+    skillGroups.innerHTML = (portfolioData.skillGroups || [])
+      .map(
+        (group) => `
+          <article class="skill-group">
+            <h3>${escapeHtml(group.title)}</h3>
+            <p>${escapeHtml(group.skills)}</p>
+          </article>
+        `,
+      )
+      .join("");
+  }
 
-if (projectsCompletedValue) {
-  projectsCompletedValue.textContent = String(cards.length);
-}
-
-function openProjectModal(card) {
-  if (!modal) return;
-  modal.style.display = "flex";
-
-  modalImg.src = card.dataset.img;
-  modalImg.alt = card.dataset.title + " preview";
-  modalTitle.innerText = card.dataset.title;
-  modalDesc.innerText = card.dataset.fullDesc || card.dataset.desc || "";
-  modalGithub.href = card.dataset.github;
-
-  if (card.dataset.live && card.dataset.live !== "#") {
-    modalLive.style.display = "inline-flex";
-    modalLive.href = card.dataset.live;
-  } else {
-    modalLive.style.display = "none";
+  const credentials = document.getElementById("credentials");
+  if (credentials) {
+    credentials.innerHTML = (portfolioData.credentials || [])
+      .map(
+        (group) => `
+          <article class="credential-group">
+            <h3>${escapeHtml(group.title)}</h3>
+            <ul>${(group.items || [])
+              .map((item) => `<li>${escapeHtml(item)}</li>`)
+              .join("")}</ul>
+          </article>
+        `,
+      )
+      .join("");
   }
 }
 
-cards.forEach((card) => {
-  card.addEventListener("click", (event) => {
-    if (event.target.closest(".project-card-links")) return;
-    openProjectModal(card);
-  });
-  card.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      openProjectModal(card);
+renderExperience();
+renderInternships();
+renderProjects();
+renderSkillsAndCredentials();
+
+const contactForm = document.getElementById("contactForm");
+const formStatus = document.getElementById("formStatus");
+
+if (contactForm && formStatus) {
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const submitButton = contactForm.querySelector('[type="submit"]');
+    if (!(submitButton instanceof HTMLButtonElement)) {
+      throw new Error("Contact form submit button was not found.");
+    }
+
+    submitButton.disabled = true;
+    formStatus.dataset.state = "sending";
+    formStatus.textContent = "Sending your message...";
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: new FormData(contactForm),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.message || `Message submission failed (${response.status}).`,
+        );
+      }
+
+      formStatus.dataset.state = "success";
+      formStatus.textContent = "Thanks, your message has been sent.";
+      contactForm.reset();
+    } catch (error) {
+      console.error("Contact form submission failed:", error);
+      formStatus.dataset.state = "error";
+      formStatus.textContent =
+        "Your message could not be sent. Please try again or email me directly.";
+    } finally {
+      submitButton.disabled = false;
     }
   });
-});
-
-if (closeBtn) {
-  closeBtn.onclick = () => {
-    modal.style.display = "none";
-  };
 }
 
-window.addEventListener("click", (event) => {
-  if (event.target === modal) {
-    modal.style.display = "none";
-  }
-});
+const motionElements = document.querySelectorAll(
+  ".experience-item, .project-entry",
+);
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    modal.style.display = "none";
-  }
-});
+if (
+  motionElements.length &&
+  "IntersectionObserver" in window &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+  const motionObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+  );
+
+  motionElements.forEach((element) => {
+    element.classList.add("motion-enter");
+    motionObserver.observe(element);
+  });
+}
 
 const navToggle = document.querySelector(".nav-toggle");
 const siteNav = document.getElementById("siteNav");
-const sectionLinks = document.querySelectorAll('.site-nav a[href^="#"]');
-const sectionTargets = document.querySelectorAll("section[id]");
+
+function closeNavigation() {
+  if (!navToggle || !siteNav) return;
+  navToggle.setAttribute("aria-expanded", "false");
+  navToggle.setAttribute("aria-label", "Open navigation");
+  siteNav.classList.remove("open");
+}
 
 if (navToggle && siteNav) {
   navToggle.addEventListener("click", () => {
     const expanded = navToggle.getAttribute("aria-expanded") === "true";
     navToggle.setAttribute("aria-expanded", String(!expanded));
-    siteNav.classList.toggle("open");
+    navToggle.setAttribute("aria-label", expanded ? "Open navigation" : "Close navigation");
+    siteNav.classList.toggle("open", !expanded);
   });
 
-  sectionLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      siteNav.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-    });
+  siteNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeNavigation);
   });
 
   document.addEventListener("click", (event) => {
-    const clickInsideNav = siteNav.contains(event.target);
-    const clickToggle = navToggle.contains(event.target);
-    if (!clickInsideNav && !clickToggle) {
-      siteNav.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
+    if (!siteNav.contains(event.target) && !navToggle.contains(event.target)) {
+      closeNavigation();
     }
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      siteNav.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-    }
+    if (event.key === "Escape") closeNavigation();
   });
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 900) {
-      siteNav.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-    }
+    if (window.innerWidth > 760) closeNavigation();
   });
 }
 
-const linkMap = {};
-sectionLinks.forEach((link) => {
-  linkMap[link.getAttribute("href")] = link;
-});
+const portraitStage = document.querySelector("[data-tilt]");
+const finePointerMotion = window.matchMedia(
+  "(pointer: fine) and (prefers-reduced-motion: no-preference)",
+);
 
-const setActiveLink = (id) => {
-  sectionLinks.forEach((link) => link.classList.remove("active"));
-  const active = linkMap[`#${id}`];
-  if (active) active.classList.add("active");
-};
+if (portraitStage && finePointerMotion.matches) {
+  portraitStage.addEventListener("pointermove", (event) => {
+    const bounds = portraitStage.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    portraitStage.style.setProperty("--rotate-x", `${-y * 7}deg`);
+    portraitStage.style.setProperty("--rotate-y", `${x * 7}deg`);
+  });
 
-if (sectionTargets.length > 0) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveLink(entry.target.id);
-        }
-      });
-    },
-    {
-      root: null,
-      rootMargin: "-45% 0px -45% 0px",
-      threshold: 0.01,
-    },
-  );
-
-  sectionTargets.forEach((section) => observer.observe(section));
+  portraitStage.addEventListener("pointerleave", () => {
+    portraitStage.style.setProperty("--rotate-x", "0deg");
+    portraitStage.style.setProperty("--rotate-y", "0deg");
+  });
 }
-
-setActiveLink("home");
 
 const footerYear = document.getElementById("footerYear");
-if (footerYear) {
-  footerYear.textContent = String(new Date().getFullYear());
-}
+if (footerYear) footerYear.textContent = String(new Date().getFullYear());
 
+let scrollFrame = 0;
+window.addEventListener(
+  "scroll",
+  () => {
+    if (scrollFrame) return;
+    scrollFrame = window.requestAnimationFrame(() => {
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress =
+        scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+      document.documentElement.style.setProperty(
+        "--scroll-progress",
+        `${progress}%`,
+      );
+      scrollFrame = 0;
+    });
+  },
+  { passive: true },
+);

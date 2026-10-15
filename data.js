@@ -1,142 +1,187 @@
-// Edit this file only to add/update projects and internships.
+// Add new project entries to projects, or update experience and skills here.
 window.PORTFOLIO_DATA = {
-  aboutSkills: [
-    { type: "icon", className: "fa-brands fa-python fa-2xl" },
-    { type: "icon", className: "fa-brands fa-java fa-2xl" },
-    { type: "image", src: "images/HTML.png", alt: "HTML" },
-    { type: "image", src: "images/CSS3.png", alt: "CSS" },
-    { type: "icon", className: "fa-brands fa-js fa-2xl" },
-    { type: "image", src: "images/MySQL.png", alt: "MySQL" },
-    { type: "image", src: "images/C.png", alt: "C" },
+  experience: [
     {
-      type: "icon",
-      className: "fa-brands fa-git-alt fa-2xl",
-      style: "color: #ed2012",
+      period: "April 2026 to Nov 2026",
+      role: "Trainee Software Engineer",
+      company: "Sparity · Hyderabad",
+      details: [
+        "Completed structured training in Python, SQL Server, FastAPI, and data warehousing.",
+        "Built FastAPI applications from scratch, including project structure and component design.",
+        "Designed audit tables, practised schema migrations, and applied database design principles.",
+        "Ran containerised applications with Docker and Docker Compose, and worked with Azure Virtual Machines.",
+        "Contributed ERD design and frontend prototyping to an internal seat-booking system.",
+      ],
+      tags: ["Python", "FastAPI", "SQL Server", "Docker"],
     },
-    { type: "icon", className: "fa-brands fa-github fa-2xl" },
-    { type: "image", src: "images/django.jpg", alt: "Django" },
-    { type: "image", src: "images/bootstrap.png", alt: "Bootstrap" },
+    {
+      period: "AUGUST 2023 – DECEMBER 2024",
+      role: "Joint Secretary",
+      company: "IEEE Computer Society",
+      details: [],
+      tags: ["Leadership", "Computer Science"],
+    },
   ],
   projects: [
     {
-      title: "Simple Calculator",
-      tech: "Python, GUI",
-      brief:
-        "Responsive arithmetic calculator with a clean and approachable interface.",
-      desc: "A responsive calculator that supports addition, subtraction, multiplication, and division with clean UI.",
-      fullDesc:
-        "This calculator project focuses on clean interaction flow, responsive layout behavior, and reliable arithmetic operations. It was built to deliver a smooth user experience across screen sizes, with clear visual hierarchy and quick input feedback for everyday calculations.",
-      github: "https://github.com/Suhas26-05/simple-calculator",
-      live: "#",
-      img: "images/Simple Calculator.jpg",
-    },
-    {
-      title: "Algorithm Visualizer",
-      tech: "JavaScript, DSA",
-      brief:
-        "Step-by-step visualization of core sorting and searching algorithms.",
-      desc: "Interactive visualizer that shows sorting and searching algorithms step-by-step.",
-      fullDesc:
-        "The visualizer demonstrates how core algorithms progress internally by animating comparisons, swaps, and search movement in real time. It is designed to make DSA concepts easier to understand with clear controls, pacing, and visual state transitions.",
-      github: "https://github.com/Suhas26-05/Algorithm-Visualizer",
-      live: "#",
-      img: "images/AlgorithmVisualizer.png",
-    },
-    {
-      title: "To-Do App",
-      tech: "React, Local Storage",
-      brief:
-        "Lightweight task manager with persistent storage and quick editing.",
-      desc: "Task manager with add, edit, delete features and persistent storage.",
-      fullDesc:
-        "This task manager provides a focused productivity workflow with create, update, and delete operations backed by local persistence. It emphasizes simplicity, predictable state updates, and a minimal UI that keeps users focused on task execution.",
-      github: "https://github.com/Suhas26-05/To-Do-List",
-      live: "#",
-      img: "images/to-do.avif",
-    },
-    {
-      title: "College Management System",
-      tech: "Django, MySQL, HTML, CSS",
-      brief:
-        "Multi-role ERP platform for academic operations and communication.",
-      desc: "Complete college ERP with HOD, Staff, Student and Parent portals.",
-      fullDesc:
-        "The system models a full academic management workflow through role-based portals for HOD, staff, students, and parents. It centralizes operations such as records, communication, and coordination, improving transparency and reducing manual administrative work.",
+      title: "CampConnect",
+      preview: "campus",
+      stack: "PYTHON · DJANGO · MYSQL",
+      description:
+        "A role-based college communication system with secure portals for HODs, faculty, students, and parents, built on Django authentication.",
+      points: [
+        "Excel-based bulk user onboarding",
+        "Attendance, assignments, and performance monitoring",
+      ],
       github: "https://github.com/Suhas26-05/Campconnect",
-      live: "#",
-      img: "images/college-management.jpg",
-    },
-    {
-      title: "Banking App",
-      tech: "Spring Boot, MySQL",
-      brief:
-        "Backend-focused banking workflow with transactions and history tracking.",
-      desc: "Banking system with account creation, transactions, and history.",
-      fullDesc:
-        "This banking application handles core financial operations including account onboarding, transaction execution, and history tracking. The project prioritizes backend clarity, reliable request processing, and maintainable service-layer structure for scalable feature growth.",
-      github: "https://github.com/Suhas26-05/Banking-App",
-      live: "#",
-      img: "images/Banking.png",
     },
     {
       title: "Weather App",
-      tech: "API, Chart.js",
-      brief:
-        "Real-time weather dashboard with API integration and chart visuals.",
-      desc: "Weather dashboard using OpenWeather API with real-time charts.",
-      fullDesc:
-        "The weather app integrates external API data and transforms it into clear visual summaries using chart components and structured metrics. It provides a real-time snapshot view while emphasizing readable data presentation and responsive dashboard behavior.",
+      preview: "weather",
+      stack: "JAVASCRIPT · WEATHER API · CHART.JS",
+      description:
+        "A weather dashboard that turns live forecast data into clear, glanceable conditions and chart-based summaries.",
+      points: [
+        "Integrated OpenWeather API data",
+        "Live project available",
+      ],
       github: "https://github.com/Suhas26-05/-VarshamVibes",
       live: "https://suhas26-05.github.io/VarshamVibes/",
-      img: "images/Weather_App.jpg",
+    },
+    {
+      title: "Banking App",
+      preview: "banking",
+      stack: "JAVA · SPRING BOOT · MYSQL",
+      description:
+        "A backend-focused banking workflow for account creation, transactions, balance tracking, and transaction history.",
+      points: [
+        "Account operations and transaction handling",
+        "Layered Spring Boot application",
+      ],
+      github: "https://github.com/Suhas26-05/Banking-App",
+    },
+    {
+      title: "Algorithm Visualizer",
+      preview: "algorithms",
+      stack: "HTML · CSS · JAVASCRIPT",
+      description:
+        "An interactive visual guide to sorting and searching, showing comparisons, swaps, and progress one step at a time.",
+      points: [
+        "Step-by-step algorithm playback",
+        "Built to make data structures and algorithms easier to follow",
+      ],
+      github: "https://github.com/Suhas26-05/Algorithm-Visualizer",
+    },
+    {
+      title: "To-Do App",
+      preview: "tasks",
+      stack: "REACT · LOCAL STORAGE",
+      description:
+        "A lightweight task manager for capturing, editing, and organizing everyday tasks with data saved in the browser.",
+      points: [
+        "Create, edit, and remove tasks",
+        "Persistent local storage",
+      ],
+      github: "https://github.com/Suhas26-05/To-Do-List",
+    },
+    {
+      title: "Simple Calculator",
+      preview: "calculator",
+      stack: "PYTHON · GUI",
+      description:
+        "A compact calculator for everyday arithmetic, with a clear input flow and responsive interface.",
+      points: [
+        "Addition, subtraction, multiplication, and division",
+        "Designed for clear, direct interaction",
+      ],
+      github: "https://github.com/Suhas26-05/simple-calculator",
     },
   ],
   internships: [
     {
       featured: true,
-      period: "Feb 2024 - Apr 2024",
-      title: "Full Stack Web Developer Intern",
-      company: "Edunet Foundation x AICTE",
+      period: "FEBRUARY – APRIL 2024",
+      role: "Full Stack Web Developer Intern",
+      company: "EY · Edunet Foundation · AICTE",
       summary:
-        "During my Full Stack Web Development internship at Ernst & Young through Edunet Foundation and AICTE, I independently designed and developed a complete Bus Reservation System using Python (Django), HTML, CSS, and MySQL. I implemented key features such as user authentication, dynamic route selection, real-time seat availability, and booking confirmation. This internship helped me strengthen my backend development skills, understand scalable application architecture, and gain hands-on experience in building real-world web applications.",
-      tags: ["Python", "Django", "MySQL", "Full-Stack"],
+        "Designed and built a bus reservation application using Django, HTML, CSS, and MySQL, with account authentication, route selection, seat availability, and booking confirmation.",
+      tags: ["Python", "Django", "MySQL"],
     },
     {
-      featured: false,
+      period: "OCTOBER – NOVEMBER 2024",
+      role: "Industrial IoT Intern",
+      company: "Siemens Centre of Excellence · NIT Warangal",
+      summary:
+        "Worked on embedded and IoT automation using Arduino Uno and Embedded C. Integrated sensors and actuators, explored sensor-fusion control, and designed a modular fuel-detection system.",
+      tags: ["Embedded C", "Arduino", "Sensors"],
+    },
+    {
       period: "2024",
-      title: "Data Visualization Intern",
+      role: "Data Visualization Intern",
       company: "Deloitte",
       summary:
-        "As a Data Visualization Intern at Deloitte, I worked on creating interactive dashboards and analytical reports using Tableau. I analyzed datasets to support data-driven decision-making and improved my ability to present business insights through effective visualizations.",
-      tags: ["Tableau", "Data Visualization", "Dashboards"],
+        "Created interactive Tableau dashboards and analytical reports, working with datasets to communicate findings through clear visualizations.",
+      tags: ["Tableau", "Dashboards", "Analytics"],
     },
     {
-      featured: false,
+      period: "MAY – JUNE 2025",
+      role: "AI Azure Intern",
+      company: "Microsoft · Edunet Foundation · AICTE",
+      summary:
+        "Completed a four-week AI and Azure program and developed a loan-prediction project using machine-learning techniques.",
+      tags: ["AI", "Machine Learning", "Python"],
+    },
+    {
       period: "2026",
-      title: "Software Development Intern",
+      role: "Software Development Intern",
       company: "Prodigy InfoTech",
       summary:
-        "During my Software Development Internship at Prodigy InfoTech, I completed a structured, project-based program focused on developing GUI-based applications using Python. I built four applications as part of weekly deliverables, implemented UI components and input validation, and followed a milestone-based workflow. Through consistent performance and dedication, I received a Letter of Recommendation.",
-      tags: ["Python", "GUI Development", "Tkinter", "Problem Solving"],
+        "Completed a project-based Python GUI program, delivering four applications with input validation and milestone-based development. Received a Letter of Recommendation.",
+      tags: ["Python", "Tkinter", "GUI"],
     },
-
+  ],
+  skillGroups: [
     {
-      featured: true,
-      period: "Oct 2024 - Nov 2024",
-      title: "Industrial IoT Intern",
-      company: "Siemens Centre of Excellence, NIT Warangal",
-      summary:
-        "As an Industrial IoT Intern at Siemens Centre of Excellence, NIT Warangal, I worked on real-time embedded systems and IoT-based automation projects using Arduino Uno and Embedded C. I integrated multiple sensors including IR sensors, servo motors, hydrometers, and load cells, and developed control algorithms for sensor fusion. I also designed a modular fuel detection system with a focus on reliability and automation. This internship enhanced my understanding of embedded programming, hardware-software integration, and real-time system design",
-      tags: ["Embedded C", "Arduino Uno", "Sensors", "Automation"],
+      title: "Languages",
+      skills: "Python, Java, JavaScript, SQL",
     },
     {
-      featured: false,
-      period: "May 2025 - Jun 2025",
-      title: "AI Azure Intern",
-      company: "Microsoft (via Edunet Foundation & AICTE)",
-      summary:
-        "I completed a 4-week AI Azure internship under a Microsoft initiative, implemented by Edunet Foundation in collaboration with AICTE. During this internship, I learned the fundamentals of Artificial Intelligence and Machine Learning, including data handling and model development. I worked on a loan prediction project where I applied machine learning techniques to build a predictive model. This internship strengthened my understanding of AI/ML workflows and real-world applications.",
-      tags: ["AI", "Machine Learning", "Python", "Loan Prediction"],
+      title: "Backend",
+      skills: "FastAPI, Django, Spring Boot, Spring Data JPA",
+    },
+    {
+      title: "Databases",
+      skills: "SQL Server, MySQL",
+    },
+    {
+      title: "Cloud and DevOps",
+      skills: "Docker, Docker Compose, Microsoft Azure (VM), AWS",
+    },
+    {
+      title: "Frontend",
+      skills: "HTML, CSS, Bootstrap",
+    },
+    {
+      title: "Tools",
+      skills: "Git, GitHub",
+    },
+  ],
+  credentials: [
+    {
+      title: "Certifications",
+      items: [
+        "AWS Academy Graduate, Cloud Foundations",
+        "Cisco, Programming Essentials in Python",
+        "Coursera, Problem Solving Using Computational Thinking",
+        "Deloitte Australia, Technology Job Simulation",
+      ],
+    },
+    {
+      title: "Education",
+      items: [
+        "B.Tech in Computer Science and Engineering, Vaagdevi College of Engineering",
+        "2021–2025 · CGPA 8.00",
+      ],
     },
   ],
 };
